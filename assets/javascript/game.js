@@ -7,13 +7,12 @@ var placeholder = [];
 var incorrectLettersArray = [];
 var correctChoicesArray=[];
 var gameOver = false;
-var list = ["beat", "sweet", "believing"];
-//choose random song from list array on refresh or when player wins
+var list = ["beat it", "sweet child of mine", " don't stop believ'n'"];
 var random = list[Math.floor(Math.random() * list.length)];
 var chances = random.length + 0;
 
 
-//show the song title in the console
+//display the song title in the console
 console.log(random);
 
 // display the number of chances on the page
@@ -36,44 +35,27 @@ document.onkeydown = function(event) {
     if(!(random.indexOf(key) === -1) &&
         (correctChoicesArray.indexOf(key)===-1) &&
         !gameOver){
-
-        // user chose letter that is in the random song string. insert that letter into the word string at the appropriate index
-////////////////////////
-        // determine indicie(s) for keyed letter in string random
-        
-            //declare new variable indicies to manipulate in the loop
-        //     var indecies = [];
-        // for(i=0; i<random.length; i++){
-        //     if(key===random[i]){
-        //         indecies.push(i);
-        //     }
-        // }
-
-        // for(i=0;i<indecies;i++){
-        //     if(random.indexOf)
-        //     placeholder.splice(indecies[i],0,key)
-        // }
-
-
-///////////////////////
-
-
+        // user chose letter that is in the random song string. insert that letter into tihe word string at the appropriate index
         //the below code works only for first index
 
+        var indexes = [];
+        for(i=0; i < random.length ; i++) {
+            if(key ===random[i]) {
+                indexes.push(i);
+            }
+            console.log("indices of key value " + indexes);
+        
+        }
+        for(i=0; i < indexes.length ; i++) {
+            placeholder.splice(indexes[i],0,key);
+            placeholder.splice(indexes[i]+1,1);
+        }
 
-        
-        var index = random.indexOf(key);
-        
-        placeholder.splice(index,0, key);
-        placeholder.splice(index + 1, 1);
-        
-
-        
-        
         // Display the correctly chosen letter on the page
         word.textContent = placeholder.join("");
     }
-       //player guesses word correctly
+
+           //player guesses word correctly
     // } else if (placeholder===random) {
     //     random = list[Math.floor(Math.random() * list.length)];
 
@@ -94,6 +76,37 @@ document.onkeydown = function(event) {
         remainingChances.textContent = chances;
 
     }  
+ //end of keydown function
+};    
+
+
+
+////////////////////////
+
+//find indicies of single or repeated keys in a string
+    // function findIndexes(str) {
+    //     var indexes = [];
+    //     for(i=0; i < str.length ; i++) {
+    //         if(key ===str[i]) {
+    //             indexes.push(i);
+    //         }
+    //         console.log("indices of key value " + indexes);
+        
+    //     }
+    //     for(i=0; i < indexes.length ; i++) {
+    //         placeholder.splice(indexes[i],0,key);
+    //     }
+    // }
+  /////////////////////
+
+ //refactor
+//function to generate pick song at random
+// function randomSong() {
+//     //choose random song from list array on refresh or when player wins
+// }
+       
+    
+
     // end of game
     // else if (chances===0){
     //     gameOver = true;
@@ -102,7 +115,6 @@ document.onkeydown = function(event) {
     // }
 
 
-    //end of keydown function
-  };
+ 
 
   
