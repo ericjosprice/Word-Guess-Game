@@ -21,7 +21,11 @@ footer{
     padding-top:10px;
 }
 
-@media screen and (min-width: 340px) {
+#song-title {
+    color: black;
+}
+
+@media screen and (min-width: 300px) {
     body {
         text-align: center;
     }
@@ -41,10 +45,10 @@ footer{
 
 @media screen and (min-width:980px) {
     img { 
-        width: 50%;
+        width: 100%;
     }
     .container {
-        width:960px;
+        width:50%;
         margin:5px auto
     }
 }
