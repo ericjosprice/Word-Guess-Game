@@ -16,6 +16,8 @@ var songs = [
     {title:"beat it", imgHTML:'<img src="assets/images/beat-it.jpg" alt="hang man">'},
     {title: "sweet child of mine", imgHTML:'<img src="assets/images/sweetchildofmine.jpg" alt="sweet child of mine">'},
     {title: "don't stop believ'n", imgHTML: '<img src="assets/images/dontstopbelieving.jpg" alt="dont stop believing">'},
+    {title: "karma chameleon", imgHTML: '<img src="assets/images/karmachameleon.jpg" alt="karmachameleon">'},
+    {title: "every breath you take", imgHTML: '<img src="assets/images/everybreathyoutake.jpeg" alt="every breath you take">'},
     ];
 var songName; 
 // =======================================================================================================================
@@ -65,7 +67,13 @@ document.onkeydown = function(event) {
     //do nothing when game is over
     if (songIndex === songs.length) {
         return;
-      }
+    } 
+    
+    if (chances===0){   // user runs out of chances end game
+        word.textContent = "GAME OVER";
+        image.innerHTML='<img src="assets/images/gameover.png" alt="you lose">';
+        return;
+    }
 
     // declare variable for event key
     var key = event.key;  
@@ -108,12 +116,24 @@ document.onkeydown = function(event) {
             chances--;
             remainingChances.textContent = chances;
 
+            
+
     } 
+
+   
+
+    if (chances===0){   // user runs out of chances end game
+        word.textContent = "GAME OVER";
+        image.innerHTML='<img src="assets/images/gameover.png" alt="you lose">';
+        return;
+    }
+    
+    
+    // new song or end game
     //placeholder is an array. turn it into a string
     var strPlaceholder = placeholder.join("");
 
-    if  // new song or end game
-    (songName===strPlaceholder){
+    if(songName===strPlaceholder){
         // increase score by 1
         score++;
         wins.textContent = score;
