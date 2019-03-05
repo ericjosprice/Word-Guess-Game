@@ -13,11 +13,11 @@ var correctChoicesArray=[];
 var score = 0;
 var songIndex = 0;
 var songs = [
-    {title:"beat it", imgHTML:'<img src="assets/images/beat-it.jpg" alt="hang man">'},
-    {title: "sweet child of mine", imgHTML:'<img src="assets/images/sweetchildofmine.jpg" alt="sweet child of mine">'},
-    {title: "don't stop believ'n", imgHTML: '<img src="assets/images/dontstopbelieving.jpg" alt="dont stop believing">'},
-    {title: "karma chameleon", imgHTML: '<img src="assets/images/karmachameleon.jpg" alt="karmachameleon">'},
-    {title: "every breath you take", imgHTML: '<img src="assets/images/everybreathyoutake.jpeg" alt="every breath you take">'},
+    {title:"beat it", imgHTML:'<img src="assets/images/beat-it.jpg" alt="hang man">', artist:"michael jackson"},
+    {title: "sweet child of mine", imgHTML:'<img src="assets/images/sweetchildofmine.jpg" alt="sweet child of mine">', artist:"guns and roses"},
+    {title: "don't stop believ'n", imgHTML: '<img src="assets/images/dontstopbelieving.jpg" alt="dont stop believing">', artist:"journey"},
+    {title: "karma chameleon", imgHTML: '<img src="assets/images/karmachameleon.jpg" alt="karmachameleon">', artist:"culture club"},
+    {title: "every breath you take", imgHTML: '<img src="assets/images/everybreathyoutake.jpeg" alt="every breath you take">', artist:"the police"},
     ];
 var songName; 
 // =======================================================================================================================
@@ -138,7 +138,7 @@ document.onkeydown = function(event) {
         score++;
         wins.textContent = score;
         // display title at top of screen
-        songTitle.textContent= songName;
+        songTitle.textContent= songName + " by " + songs[songIndex].artist;
         songTitle.style.display = "block";
         //display album cover
         image.innerHTML = songs[songIndex].imgHTML; 
