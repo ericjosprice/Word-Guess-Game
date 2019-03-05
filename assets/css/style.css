@@ -21,9 +21,6 @@ footer{
     padding-top:10px;
 }
 
-#song-title {
-    color: black;
-}
 
 @media screen and (min-width: 300px) {
     body {

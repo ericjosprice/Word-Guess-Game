@@ -1,48 +1,83 @@
-var songTitle = document.getElementById("song-title");
+//list of variables
+// ==========================================================================================================================
+
 var wins = document.getElementById("wins");
 var word = document.getElementById("word");
 var remainingChances = document.getElementById("chances");
 var letters = document.getElementById("letters");
+var image = document.getElementById("image");
+var songTitle = document.getElementById("song-title");
 var placeholder = [];
 var incorrectLettersArray = [];
 var correctChoicesArray=[];
-var gameOver = false;
-var list = ["beat it", "sweet child of mine", "don't stop believ'n"];
-var random = list[Math.floor(Math.random() * list.length)];
-var chances = random.length + 0;
+var score = 0;
+var songIndex = 0;
+var songs = [
+    {title:"beat it", imgHTML:'<img src="assets/images/beat-it.jpg" alt="hang man">'},
+    {title: "sweet child of mine", imgHTML:'<img src="assets/images/sweetchildofmine.jpg" alt="sweet child of mine">'},
+    {title: "don't stop believ'n", imgHTML: '<img src="assets/images/dontstopbelieving.jpg" alt="dont stop believing">'},
+    ];
+var songName; 
+// =======================================================================================================================
 
+function displaySong() {
+    if(songIndex <= songs.length-1) {
+        
+        for (var i = 0; i<songName.length;i++) {
+            if(songName[i]===" "){
+                placeholder.push(" ");
+            }else if(songName[i] === "'") {
+                placeholder.push("'");
+            } else{
+            placeholder.push("_");
+            }
+        }
+        word.textContent = placeholder.join("");
 
-//display song title in the console
-console.log(random);
-
-// display the number of chances on the page
-remainingChances.textContent = chances;
-
-//display the random song title in the current word section as 
-for (var i = 0; i<random.length;i++) {
-    if(random[i]===" "){
-        placeholder.push(" ");
-    }else {
-
-    placeholder.push("_");
-    word.textContent = placeholder.join("");
     }
 }
+
+//=========================================================================================================================
+
+
+//begin the game >>>>
+
+// hide the song title at the top of the screen
+songTitle.style.display = "none";
+
+// set wins equal to zero
+wins.textContent = score;
+
+//display song at index zero on screen in hangman style
+songName = songs[songIndex].title;
+displaySong();
+
+//determine number of chances
+var chances = songName.length + 5;
+remainingChances.textContent = chances;
+
+//display song title in the console
+console.log(songName);
 
 
 //trigger event function on key press
 document.onkeydown = function(event) {
+    //do nothing when game is over
+    if (songIndex === songs.length) {
+        return;
+      }
+
     // declare variable for event key
-    var key = event.key;
-    
+    var key = event.key;  
+
     //verify whether or not the letter exists in the string random, if not then add it to letters array AND verify if the letter already exists in the correctChoicesArray
-    if(!(random.indexOf(key) === -1) &&
-        (correctChoicesArray.indexOf(key)===-1) &&
-        !gameOver){
-        // user chose letter that is in the random song string. insert that letter into the string at the appropriate indices 
-        var indexes = [];
-        for(i=0; i < random.length ; i++) {
-            if(key ===random[i]) {
+    if(!(songName.indexOf(key) === -1) &&
+    (correctChoicesArray.indexOf(key)===-1)){
+    // user chose letter that is in the random song string. insert that letter into the string at the appropriate indices 
+    var indexes = [];
+    function correctGuess(){
+        for(i=0; i < songName.length ; i++) {
+            if(key === songName[i]) {
                 indexes.push(i);
             }
         
@@ -50,83 +85,57 @@ document.onkeydown = function(event) {
         for(i=0; i < indexes.length ; i++) {
             placeholder.splice(indexes[i],0,key);
             placeholder.splice(indexes[i]+1, 1);
-        }
+        }   
+    }
 
-        
-        //if player wins then 1. songtitle changes to white. 2. respective song image displays 3. new song title is chosen 4. new song title is displayed in hangman format i.e. _ _ _ _ 5. chances reset 6. chosen letters resets. 
-        
-        /////////////////////////
-        if(random===placeholder){
-            songTitle.style.color = "white";
+    correctGuess();
 
-        }
-        ////////////////////////
 
         // Display the correctly chosen letter on the page
         word.textContent = placeholder.join("");
-        console.log("indices of " + key  + ": " + indexes);
-    }
+        // console.log("indices of " + key  + ": " + indexes);
 
-           //player guesses word correctly
-    // } else if (placeholder===random) {
-    //     random = list[Math.floor(Math.random() * list.length)];
-
-    //      //has the letter been incorrectly guessed previoiusly?
-    //     //and has the letter already been chosen correcly?
-    // }
-    else if (incorrectLettersArray.indexOf(key) === -1 &&                        (correctChoicesArray.indexOf(key)===-1) &&
-                !gameOver){
+    } else if (incorrectLettersArray.indexOf(key) === -1 && 
+            (correctChoicesArray.indexOf(key)===-1)){
 
 
-        // add key to letters lettersArray
-        incorrectLettersArray.push("" + key);
-        //update DOM to show letters that have been selected
-        letters.textContent = incorrectLettersArray;
+            // add key to letters lettersArray
+            incorrectLettersArray.push("" + key);
+            //update DOM to show letters that have been selected
+            letters.textContent = incorrectLettersArray;
 
-        //take one chance away and update the chance counter
-        chances--;
+            //take one chance away and update the chance counter
+            chances--;
+            remainingChances.textContent = chances;
+
+    } 
+    //placeholder is an array. turn it into a string
+    var strPlaceholder = placeholder.join("");
+
+    if  // new song or end game
+    (songName===strPlaceholder){
+        // increase score by 1
+        score++;
+        wins.textContent = score;
+        // display title at top of screen
+        songTitle.textContent= songName;
+        songTitle.style.display = "block";
+        //display album cover
+        image.innerHTML = songs[songIndex].imgHTML; 
+
+        // increase songIndex by 1
+        songIndex++;
+        // display next song
+        songName = songs[songIndex].title;
+        placeholder=[];
+        displaySong();
+
+        // update chances
+        chances = songName.length + 5;
         remainingChances.textContent = chances;
 
-    }  
- //end of keydown function
-};    
+    } 
 
 
-
-////////////////////////
-
-//find indicies of single or repeated keys in a string
-    // function findIndexes(str) {
-    //     var indexes = [];
-    //     for(i=0; i < str.length ; i++) {
-    //         if(key ===str[i]) {
-    //             indexes.push(i);
-    //         }
-    //         console.log("indices of key value " + indexes);
-        
-    //     }
-    //     for(i=0; i < indexes.length ; i++) {
-    //         placeholder.splice(indexes[i],0,key);
-    //     }
-    // }
-  /////////////////////
-
- //refactor
-//function to generate pick song at random
-// function randomSong() {
-//     //choose random song from list array on refresh or when player wins
-// }
-       
-    
-
-    // end of game
-    // else if (chances===0){
-    //     gameOver = true;
-    //     word.textContent = "GAME OVER";
-
-    // }
-
-
- 
-
-  
+    /// end of event
+};
