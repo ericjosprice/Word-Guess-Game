@@ -1,7 +1,9 @@
 # Word-Guess-Game
 Word Guess Game
 
+deployed site: https://ericjosprice.github.io/Word-Guess-Game/
 
+git hub repo: https://github.com/ericjosprice/Word-Guess-Game.git
 
 1. What the project does
 hangman style guessing game. guess the song title of top charts 80's hits
