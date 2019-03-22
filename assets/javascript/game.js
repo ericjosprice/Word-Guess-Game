@@ -14,7 +14,7 @@ var score = 0;
 var songIndex = 0;
 var songs = [
     {title:"beat it", imgHTML:'<img src="assets/images/beat-it.jpg" alt="hang man">', artist:"michael jackson"},
-    {title: "sweet child of mine", imgHTML:'<img src="assets/images/sweetchildofmine.jpg" alt="sweet child of mine">', artist:"guns and roses"},
+    {title: "sweet child of mine", imgHTML:'<img src="assets/images/sweetchildofmine.jpg" alt="sweet child of mine">', artist:"guns N roses"},
     {title: "don't stop believ'n", imgHTML: '<img src="assets/images/dontstopbelieving.jpg" alt="dont stop believing">', artist:"journey"},
     {title: "karma chameleon", imgHTML: '<img src="assets/images/karmachameleon.jpg" alt="karmachameleon">', artist:"culture club"},
     {title: "every breath you take", imgHTML: '<img src="assets/images/everybreathyoutake.jpeg" alt="every breath you take">', artist:"the police"},
@@ -153,6 +153,8 @@ document.onkeydown = function(event) {
         // update chances
         chances = songName.length + 5;
         remainingChances.textContent = chances;
+        incorrectLettersArray = []
+        letters.textContent = incorrectLettersArray;
 
     } 
 
